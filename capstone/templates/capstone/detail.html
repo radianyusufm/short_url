@@ -1,0 +1,141 @@
+
+{% extends "capstone/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+   
+          <div class="col-sm-12">
+            <br>
+            <div class="card">
+              <div class="card-body">
+                <p class="card-text"><i class="bi bi-house-door"></i> <a href="{{url_asli}}" target="_blank">{{url_asli|slice:":100"}}</a></p>
+                
+                <p class="card-text"><i class="bi bi-link-45deg"></i> 
+                  <a href="http://127.0.0.1:8000/s/{{url_singkat}}" target="_blank">
+                    <span class="alert alert-primary">http://127.0.0.1:8000/s/{{url_singkat}}</span>
+                  </a> 
+                  <button type="button" class="btn btn-light" onclick="copy_text('http://127.0.0.1:8000/s/{{url_singkat}}')"> <i class="bi bi-copy"> </i> </button>
+
+                </p>
+                <p class="card-text">Password: {% if is_password %} True {% else %} False {% endif %}</p>
+
+                <p class="card-text"><i class="bi bi-calendar"></i> {{waktu}}</p>
+                <p class="card-text">Click: <span class="badge badge-info">{{jumlah_klik}}</span></p>
+
+              </div>
+          </div>
+          <br>
+        </div>
+
+        <!-- OS -->
+        <div class="col-sm-4">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">OS</th>
+                <th scope="col">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for os in os_counts %}
+                
+              <tr>
+                <td>{{os.os_link}}</td>
+                <td>{{os.count}}</td>
+              </tr>
+
+              {% endfor %}
+
+             
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Browser -->
+        <div class="col-sm-4">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Browser</th>
+                <th scope="col">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for browser in browser_counts %}
+                
+              <tr>
+                <td>{{browser.browser_link}}</td>
+                <td>{{browser.count}}</td>
+              </tr>
+
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Defice -->
+        <div class="col-sm-4">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Device</th>
+                <th scope="col">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for device in device_counts %}
+                
+              <tr>
+                <td>{{device.device_link}}</td>
+                <td>{{device.count}}</td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-sm-12">
+          <br>
+          <a data-toggle="modal" data-target="#modal-qrcode" type="button" class="btn btn-danger button-right" style="color: aliceblue;">  Delete </a>
+        </div>
+        
+
+    </div>
+</div>
+
+
+<!-- Confirm Delete -->
+<div class="modal fade" id="modal-qrcode" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p>Are you sure ?</p>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <a href="{% url 'delete_url' id %}" type="button" class="btn btn-danger"> Yes</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'capstone/index.js' %}"></script>
+
+{% endblock %}
